@@ -1,0 +1,35 @@
+<div class="container">
+  <div class="row justify-content-center">
+      <div class="col-4">
+        <form [formGroup]="loginForm" (ngSubmit)="login()" autocomplete="off">
+          <h2 class="text-center text-primary">Enter login details</h2>
+          <hr>
+          <div class="mb-3">
+              <input type="text"
+                  class="form-control"
+                  name="email"
+                  formControlName="email"
+                  placeholder="Email">
+          </div>
+
+          <div class="mb-3">
+              <input type="password"
+                  class="form-control"
+                  name="password"
+                  formControlName="password"
+                  placeholder="Password">
+          </div>
+          <div class="form-group form-switch text-center justify-content-center">
+            <input class="form-check-input me-2" type="checkbox" id="flexSwitchCheckDefault" name="stayLoggedIn" formControlName="stayLoggedIn">
+            <label>Keep me logged in for 7 days</label>
+          </div>
+          <div class="form-group text-center mt-2">
+              <button class="btn btn-success btn-lg me-2" type="submit">Login</button>
+          </div>
+
+        </form>
+        <hr>
+
+      </div>
+  </div>
+</div>
