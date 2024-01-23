@@ -1,0 +1,37 @@
+<div class="container">
+  <div class="col">
+		<h2>Your leave balance <h4>(available days)</h4></h2>
+	</div>
+  @if (leaveBalance) {
+		<div class="row text-center">
+	    <div class="col">
+	    <div class="counter">
+        <i class="fa fa-code fa-2x"></i>
+        <h2 class="timer count-title count-number">{{leaveBalance.vacationDays - leaveBalance.vacationDaysTaken}}</h2>
+        <p class="count-text ">Vacation Days</p>
+    </div>
+	    </div>
+    <div class="col">
+      <div class="counter">
+        <i class="fa fa-coffee fa-2x"></i>
+        <h2 class="timer count-title count-number">{{leaveBalance.sickDays - leaveBalance.sickDaysTaken}}</h2>
+        <p class="count-text ">Sick Days</p>
+    </div>
+      </div>
+    <div class="col">
+      <div class="counter">
+        <i class="fa fa-lightbulb-o fa-2x"></i>
+        <h2 class="timer count-title count-number">{{leaveBalance.remoteWorkDays - leaveBalance.sickDaysTaken}}</h2>
+        <p class="count-text ">Remote Work Days</p>
+      </div>
+    </div>
+    <div class="col">
+      <div class="counter">
+        <i class="fa fa-bug fa-2x"></i>
+        <h2 class="timer count-title count-number">{{leaveBalance.familyDays - leaveBalance.familyDaysTaken}}</h2>
+        <p class="count-text ">Family Leave Days</p>
+    </div>
+      </div>
+    </div>
+  }
+</div>

@@ -1,0 +1,45 @@
+
+<div class="container" style="margin-top: 50px;">
+  <div class="col">
+		<h2>Apply Leave</h2>
+	</div>
+
+  <form [formGroup]="leaveForm" (ngSubmit)="onSubmit()" autocomplete="off">
+
+    <mat-form-field>
+      <mat-label>Leave Type</mat-label>
+      <mat-select  formControlName="leaveType" name="leaveType">
+        @for (leave of leaveTypes; track leave) {
+          <mat-option [value]="leave">{{leave}}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field color="accent">
+      <mat-label>From Date</mat-label>
+      <input matInput formControlName="startDate" name="startDate" [matDatepicker]="picker1">
+
+      <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+      <mat-datepicker #picker1></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field color="accent">
+      <mat-label>To Date</mat-label>
+      <input matInput formControlName="endDate" name="endDate" [matDatepicker]="picker2">
+
+      <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
+      <mat-datepicker #picker2 color="primary"></mat-datepicker>
+    </mat-form-field>
+
+    <div class="col">
+      <mat-form-field class="example-full-width">
+        <mat-label>Leave a comment</mat-label>
+        <textarea matInput formControlName="comment" name="comment"></textarea>
+      </mat-form-field>
+    </div>
+
+    <div class="col">
+      <button class="btn btn-primary" [disabled]="!leaveForm.valid">Submit</button>
+    </div>
+  </form>
+</div>
