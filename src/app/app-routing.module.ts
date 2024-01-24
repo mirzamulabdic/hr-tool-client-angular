@@ -7,6 +7,7 @@ import { authGuard } from './guards/auth.guard';
 import { LeaveBalanceComponent } from './components/leave-requests/leave-balance/leave-balance.component';
 import { NewLeaveRequestComponent } from './components/leave-requests/new-leave-request/new-leave-request.component';
 import { LeaveRequestsComponent } from './components/leave-requests/leave-requests.component';
+import { MyLeaveRequestsComponent } from './components/leave-requests/my-leave-requests/my-leave-requests.component';
 
 const routes: Routes = [
   {
@@ -23,10 +24,13 @@ const routes: Routes = [
         path: 'leave',
         component: LeaveRequestsComponent,
         children: [
-          {path:'', redirectTo: '/leave/apply', pathMatch:'full'},
           {
-          path: 'apply',
-          component: NewLeaveRequestComponent,
+            path: 'apply',
+            component: NewLeaveRequestComponent,
+          },
+          {
+            path: 'my-leave-requests',
+            component: MyLeaveRequestsComponent,
           },
       ]
       },

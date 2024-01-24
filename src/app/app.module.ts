@@ -11,7 +11,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { LeaveBalanceComponent } from './components/leave-requests/leave-balance/leave-balance.component';
 import { NewLeaveRequestComponent } from './components/leave-requests/new-leave-request/new-leave-request.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
@@ -20,6 +20,7 @@ import { LeaveRequestsComponent } from './components/leave-requests/leave-reques
 import {MatSelectModule} from '@angular/material/select';
 import { authInterceptor } from './interceptors/auth.interceptor';
 import { ToastrModule } from 'ngx-toastr';
+import { MyLeaveRequestsComponent } from './components/leave-requests/my-leave-requests/my-leave-requests.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { ToastrModule } from 'ngx-toastr';
     NotFoundComponent,
     LeaveBalanceComponent,
     NewLeaveRequestComponent,
-    LeaveRequestsComponent
+    LeaveRequestsComponent,
+    MyLeaveRequestsComponent
   ],
   imports: [
     BrowserModule,
@@ -48,6 +50,7 @@ import { ToastrModule } from 'ngx-toastr';
     }),
   ],
   providers: [
+    provideAnimations(),
     provideNativeDateAdapter(),
     provideHttpClient(withInterceptors([authInterceptor ])),
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }

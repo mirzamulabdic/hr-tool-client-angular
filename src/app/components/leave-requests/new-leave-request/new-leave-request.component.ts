@@ -1,15 +1,17 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { LeaveBalance } from './../../../models/leaveBalance.model';
+import { Component, OnChanges, OnInit, SimpleChanges, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { LeaveRequest } from '../../../models/leaveRequest.model';
 import { LeaveRequestService } from '../../../services/leave-request.service';
 import { ToastrService } from 'ngx-toastr';
+import { EmployeeService } from '../../../services/employee.service';
 
 @Component({
   selector: 'app-new-leave-request',
   templateUrl: './new-leave-request.component.html',
   styleUrl: './new-leave-request.component.css'
 })
-export class NewLeaveRequestComponent implements OnInit {
+export class NewLeaveRequestComponent implements OnInit, OnChanges {
 
   leaveTypes: string[] = ['Vacation', 'Sick Day', 'Remote Work', 'Family Leave'];
   leaveForm = new FormGroup({
@@ -20,10 +22,19 @@ export class NewLeaveRequestComponent implements OnInit {
   });
 
   leaveService = inject(LeaveRequestService);
+  employeeService = inject(EmployeeService);
   toastr = inject(ToastrService);
 
-  ngOnInit(): void {
+  leaveBalance: LeaveBalance | undefined;
 
+
+
+  ngOnChanges(changes: SimpleChanges): void {
+
+  }
+
+  ngOnInit(): void {
+    this.getLeaveBalance();
   }
 
   validateStartDate(control: FormControl) {
@@ -40,14 +51,14 @@ export class NewLeaveRequestComponent implements OnInit {
 
     if (durationInDays <= 0)
     {
-      this.toastr.error('Hello world!', 'Toastr fun!');
+      this.toastr.error('Invalid date!', 'Bad Request!');
       return;
     }
     const leaveType = String(this.leaveForm.value.leaveType).replace(/\s/g, '').toLocaleLowerCase();
 
     if (leaveType != "vacation" && leaveType != "remotework" && leaveType != "sickday" && leaveType != "familyleave")
     {
-      alert('ne valja');
+      this.toastr.error('Invalid leave type!', 'Bad Request!');
       return;
     }
     const newLeave: LeaveRequest = {
@@ -58,10 +69,32 @@ export class NewLeaveRequestComponent implements OnInit {
       comment: String(this.leaveForm.value.comment)
     }
 
-    this.leaveService.createLeaveRequest(newLeave).subscribe(res=>{
-      console.log(res)
-    })
+    this.leaveService.createLeaveRequest(newLeave).subscribe({
+      next: res => {
+        if (this.leaveBalance) {
+              this.leaveBalance.vacationDaysTaken = res.vacationDaysTaken;
+              this.leaveBalance.remoteWorkDaysTaken = res.remoteWorkDaysTaken;
+              this.leaveBalance.sickDaysTaken = res.sickDaysTaken;
+              this.leaveBalance.familyDaysTaken = res.familyDaysTaken;
+        }
+        this.leaveForm.reset();
 
+        console.log(this.leaveForm)
+        this.toastr.success('Leave request created!');
+      },
+      error: error=>{
+        if (error.error == 'Leave balance invalid' && error.status == 400) {
+            this.toastr.warning("You don't have enough leave days!");
+        }
+      }
+    })
+  }
+
+
+  getLeaveBalance() {
+    this.employeeService.getLeaveBalance().subscribe(res=>{
+      this.leaveBalance = res;
+    })
   }
 
   getDaysWithoutWeekend(startDate: Date, endDate: Date) {

@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges, inject } from '@angular/core';
 import { EmployeeService } from '../../../services/employee.service';
 import { LeaveBalance } from '../../../models/leaveBalance.model';
 
@@ -7,20 +7,19 @@ import { LeaveBalance } from '../../../models/leaveBalance.model';
   templateUrl: './leave-balance.component.html',
   styleUrl: './leave-balance.component.css'
 })
-export class LeaveBalanceComponent implements OnInit {
+export class LeaveBalanceComponent implements OnInit, OnChanges {
 
 
-  leaveBalance: LeaveBalance | undefined;
+
+  @Input() leaveBalance: LeaveBalance | undefined;
 
   private employeeService = inject(EmployeeService);
 
   ngOnInit(): void {
-    this.getLeaveBalance();
+
   }
 
-  getLeaveBalance() {
-    this.employeeService.getLeaveBalance().subscribe(res=>{
-      this.leaveBalance = res;
-    })
+  ngOnChanges(changes: SimpleChanges): void {
   }
+
 }
