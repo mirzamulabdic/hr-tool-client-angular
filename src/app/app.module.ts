@@ -21,7 +21,14 @@ import {MatSelectModule} from '@angular/material/select';
 import { authInterceptor } from './interceptors/auth.interceptor';
 import { ToastrModule } from 'ngx-toastr';
 import { MyLeaveRequestsComponent } from './components/leave-requests/my-leave-requests/my-leave-requests.component';
-
+import { EmployeeComponent } from './components/employee/employee.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
+import {MatStepperModule} from '@angular/material/stepper';
+import { NewEmployeeComponent } from './components/employee/new-employee/new-employee.component';
+import { EmployeeDetailComponent } from './components/employee/employee-detail/employee-detail.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { loadingInterceptor } from './interceptors/loading.interceptor';
+import { EmployeeMyProfileComponent } from './components/employee/employee-my-profile/employee-my-profile.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,7 +39,12 @@ import { MyLeaveRequestsComponent } from './components/leave-requests/my-leave-r
     LeaveBalanceComponent,
     NewLeaveRequestComponent,
     LeaveRequestsComponent,
-    MyLeaveRequestsComponent
+    MyLeaveRequestsComponent,
+    EmployeeComponent,
+    SidebarComponent,
+    NewEmployeeComponent,
+    EmployeeDetailComponent,
+    EmployeeMyProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -48,11 +60,15 @@ import { MyLeaveRequestsComponent } from './components/leave-requests/my-leave-r
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-right'
     }),
+    MatStepperModule,
+    NgxSpinnerModule.forRoot({
+      type: 'line-scale-party'
+    }),
   ],
   providers: [
     provideAnimations(),
     provideNativeDateAdapter(),
-    provideHttpClient(withInterceptors([authInterceptor ])),
+    provideHttpClient(withInterceptors([authInterceptor, loadingInterceptor])),
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }
   ],
   bootstrap: [AppComponent]

@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.scss'
 })
 export class LoginComponent implements OnInit {
 
@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
   login() {
     this.authService.login(this.loginForm.value.email as string, this.loginForm.value.password as string, this.loginForm.value.stayLoggedIn as boolean).subscribe({
       next: () => {
-        this.router.navigateByUrl('/home')
+        this.router.navigateByUrl('/dashboard')
       },
       error: error => console.log(error)
     })

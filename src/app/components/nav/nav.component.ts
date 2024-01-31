@@ -4,12 +4,8 @@ import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-nav',
   templateUrl: './nav.component.html',
-  styleUrl: './nav.component.css'
+  styleUrl: './nav.component.scss'
 })
 export class NavComponent {
-  authService = inject(AuthService);
 
-  logout() {
-    this.authService.logout();
-  }
 }
