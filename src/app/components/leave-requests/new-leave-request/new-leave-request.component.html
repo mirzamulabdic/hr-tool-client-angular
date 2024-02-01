@@ -1,5 +1,6 @@
 <app-leave-balance [leaveBalance]="leaveBalance"></app-leave-balance>
 
+@if (!loading) {
 <div class="container" style="margin-top: 50px;">
   <div class="col">
 		<h2>Apply Leave</h2>
@@ -44,3 +45,4 @@
     </div>
   </form>
 </div>
+}

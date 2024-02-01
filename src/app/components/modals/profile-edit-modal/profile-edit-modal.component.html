@@ -1,0 +1,42 @@
+<div class="modal-header">
+  <h2 class="modal-title pull-left fw-bold">Edit your profile</h2>
+  <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+    <span aria-hidden="true" class="visually-hidden">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="row mb-3">
+    <div class="col-12">
+      <h4 class="fw-bolder">Change Profile Picture</h4>
+      <form>
+        <input type="file" name="profilePicture" accept="image/*">
+        <button type="submit" class="btn btn-primary">Upload</button>
+      </form>
+    </div>
+  </div>
+  <hr class="my-3">
+  <div class="row">
+    <div class="col-12">
+      <h4 class="fw-bolder">Change Your Password</h4>
+      <form #passwordForm="ngForm">
+        <div class="form-group mb-3 w-50">
+          <label>Old Password</label>
+          <input type="password"  [(ngModel)]="oldPassword" value="oldPassword"  name="password"  class="form-control-sm" />
+          <label>New Password</label>
+          <input type="password" [(ngModel)]="newPassword"  value="newPassword" name="password" class="form-control-sm" />
+          <label>Confirm Password</label>
+          <input type="password" [(ngModel)]="confirmPassword"  value="confirmPassword" name="password" class="form-control-sm" />
+        </div>
+        <button type="submit" class="btn btn-primary pull-right" [disabled]="!oldPassword && !newPassword && !confirmPassword" (click)="passwordChange()">Change Password</button>
+      </form>
+    </div>
+  </div>
+
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="bsModalRef.hide()">Close</button>
+</div>
+<!-- <div class="modal-footer">
+  <button type="button" class="btn btn-dark" (click)="bsModalRef.hide()">Submit</button>
+</div> -->

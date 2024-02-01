@@ -9,11 +9,13 @@ import { EmployeeService } from '../../../services/employee.service';
 @Component({
   selector: 'app-new-leave-request',
   templateUrl: './new-leave-request.component.html',
-  styleUrl: './new-leave-request.component.css'
+  styleUrl: './new-leave-request.component.scss'
 })
 export class NewLeaveRequestComponent implements OnInit, OnChanges {
 
   leaveTypes: string[] = ['Vacation', 'Sick Day', 'Remote Work', 'Family Leave'];
+  loading = false;
+
   leaveForm = new FormGroup({
     leaveType: new FormControl('', Validators.required),
     startDate: new FormControl('',[ Validators.required]),
@@ -47,14 +49,14 @@ export class NewLeaveRequestComponent implements OnInit, OnChanges {
     const startDate = new Date(this.leaveForm.value.startDate as string)
     const endDate = new Date(this.leaveForm.value.endDate as string)
 
-    const durationInDays = this.getDaysWithoutWeekend(startDate, endDate);
+    const durationInDays = this.getWeekDaysWithoutWeekend(startDate, endDate);
 
     if (durationInDays <= 0)
     {
       this.toastr.error('Invalid date!', 'Bad Request!');
       return;
     }
-    const leaveType = String(this.leaveForm.value.leaveType).replace(/\s/g, '').toLocaleLowerCase();
+    const leaveType = String(this.leaveForm.value.leaveType).replace(/\s/g, '').toLowerCase();
 
     if (leaveType != "vacation" && leaveType != "remotework" && leaveType != "sickday" && leaveType != "familyleave")
     {
@@ -78,7 +80,8 @@ export class NewLeaveRequestComponent implements OnInit, OnChanges {
               this.leaveBalance.familyDaysTaken = res.familyDaysTaken;
         }
         this.leaveForm.reset();
-
+        this.leaveForm.markAsPristine();
+        this.leaveForm.markAsUntouched();
         console.log(this.leaveForm)
         this.toastr.success('Leave request created!');
       },
@@ -92,12 +95,14 @@ export class NewLeaveRequestComponent implements OnInit, OnChanges {
 
 
   getLeaveBalance() {
+    this.loading = true;
     this.employeeService.getLeaveBalance().subscribe(res=>{
       this.leaveBalance = res;
+      this.loading = false;
     })
   }
 
-  getDaysWithoutWeekend(startDate: Date, endDate: Date) {
+  getWeekDaysWithoutWeekend(startDate: Date, endDate: Date) {
     const current = new Date(startDate);
     const end = new Date(endDate);
     let weekdays = 0;

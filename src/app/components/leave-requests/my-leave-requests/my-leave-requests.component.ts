@@ -6,7 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-my-leave-requests',
   templateUrl: './my-leave-requests.component.html',
-  styleUrl: './my-leave-requests.component.css'
+  styleUrl: './my-leave-requests.component.scss'
 })
 export class MyLeaveRequestsComponent implements OnInit {
 
@@ -33,4 +33,10 @@ export class MyLeaveRequestsComponent implements OnInit {
     })
   }
 
+  getLeaveTypeCorrectName(leaveType: string) {
+    if(leaveType === 'vacation') return 'Vacation'
+    else if (leaveType === 'remotework') return 'Remote Work'
+    else if (leaveType === 'sickday') return 'Sick Day'
+    else return 'Family Leave'
+  }
 }

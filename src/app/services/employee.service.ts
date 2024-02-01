@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { map, of } from 'rxjs';
+import { NewEmployee } from '../models/newEmployee.model';
+import { Employee } from '../models/employee.model';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +29,15 @@ export class EmployeeService  {
         this.leaveBalance = res;
         return res;
       })
-    )
+    );
+  }
+
+  getEmployeeInfo() {
+    return this.http.get<Employee>(this.baseUrl + '/my-info');
+  }
+
+  addNewEmployee(newEmployee: NewEmployee) {
+    return this.http.post(this.baseUrl + '/new-employee', newEmployee);
   }
 
   setLeaveBalance(newLeaveBalance: LeaveBalance) {

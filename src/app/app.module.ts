@@ -7,7 +7,7 @@ import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { NavComponent } from './components/nav/nav.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { LeaveBalanceComponent } from './components/leave-requests/leave-balance/leave-balance.component';
 import { NewLeaveRequestComponent } from './components/leave-requests/new-leave-request/new-leave-request.component';
@@ -29,6 +29,8 @@ import { EmployeeDetailComponent } from './components/employee/employee-detail/e
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { loadingInterceptor } from './interceptors/loading.interceptor';
 import { EmployeeMyProfileComponent } from './components/employee/employee-my-profile/employee-my-profile.component';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { ProfileEditModalComponent } from './components/modals/profile-edit-modal/profile-edit-modal.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -44,7 +46,8 @@ import { EmployeeMyProfileComponent } from './components/employee/employee-my-pr
     SidebarComponent,
     NewEmployeeComponent,
     EmployeeDetailComponent,
-    EmployeeMyProfileComponent
+    EmployeeMyProfileComponent,
+    ProfileEditModalComponent
   ],
   imports: [
     BrowserModule,
@@ -64,6 +67,8 @@ import { EmployeeMyProfileComponent } from './components/employee/employee-my-pr
     NgxSpinnerModule.forRoot({
       type: 'line-scale-party'
     }),
+    [ModalModule.forRoot()],
+    FormsModule
   ],
   providers: [
     provideAnimations(),

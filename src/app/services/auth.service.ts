@@ -39,6 +39,10 @@ export class AuthService {
     )
   }
 
+  changePassword(email: string ,oldPassword: string, newPassword: string) {
+    return this.http.put(this.baseUrl + '/change-password', {email, oldPassword, newPassword});
+  }
+
   getAuthStatusObservable() {
     return this.authStatusListener.asObservable();
   }

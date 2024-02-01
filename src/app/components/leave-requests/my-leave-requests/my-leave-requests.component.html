@@ -1,3 +1,7 @@
+<div class="container">
+  <div class="col">
+		<h1>My leave requests</h1>
+	</div>
 
 <div class="row">
   <table class="table">
@@ -13,13 +17,14 @@
     </thead>
     <tbody>
       <tr *ngFor="let leave of leaveRequests">
-        <th >{{leave.leaveType}}</th>
-        <th >{{leave.startDate | date}}</th>
-        <th >{{leave.endDate | date}}</th>
-        <th >{{leave.durationDays}}</th>
-        <th >{{leave.leaveStatus}}</th>
-        <th ><button class="btn btn-info" [disabled]="leave.leaveStatus !='Pending'" (click)="cancelLeaveRequest(leave.leaveRequestId!)">Cancel</button></th>
+        <th>{{ getLeaveTypeCorrectName(leave.leaveType) }}</th>
+        <th>{{leave.startDate | date}}</th>
+        <th>{{leave.endDate | date}}</th>
+        <th>{{leave.durationDays}}</th>
+        <th>{{leave.leaveStatus}}</th>
+        <th><button class="btn btn-info" [disabled]="leave.leaveStatus !='Pending'" (click)="cancelLeaveRequest(leave.leaveRequestId!)">Cancel</button></th>
       </tr>
     </tbody>
   </table>
+</div>
 </div>

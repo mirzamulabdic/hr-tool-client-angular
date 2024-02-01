@@ -8,6 +8,10 @@ import { LeaveBalanceComponent } from './components/leave-requests/leave-balance
 import { NewLeaveRequestComponent } from './components/leave-requests/new-leave-request/new-leave-request.component';
 import { LeaveRequestsComponent } from './components/leave-requests/leave-requests.component';
 import { MyLeaveRequestsComponent } from './components/leave-requests/my-leave-requests/my-leave-requests.component';
+import { EmployeeComponent } from './components/employee/employee.component';
+import { NewEmployeeComponent } from './components/employee/new-employee/new-employee.component';
+import { EmployeeDetailComponent } from './components/employee/employee-detail/employee-detail.component';
+import { EmployeeMyProfileComponent } from './components/employee/employee-my-profile/employee-my-profile.component';
 
 const routes: Routes = [
   {
@@ -15,9 +19,9 @@ const routes: Routes = [
     runGuardsAndResolvers: 'always',
     canActivate: [authGuard],
     children: [
-      {path:'', redirectTo: '/home', pathMatch:'full'},
+      {path:'', redirectTo: '/dashboard', pathMatch:'full'},
       {
-        path: 'home',
+        path: 'dashboard',
         component: HomeComponent,
       },
       {
@@ -33,6 +37,32 @@ const routes: Routes = [
             component: MyLeaveRequestsComponent,
           },
       ]
+      },
+      {
+        path: 'employees',
+        component: EmployeeComponent,
+        children: [
+          {
+            path: 'employees:id',
+            component: EmployeeDetailComponent, //employee detail
+          },
+          {
+            path: 'my-profile',
+            component: EmployeeMyProfileComponent, //employee detail
+          },
+          {
+            path: 'new-employee',
+            component: NewEmployeeComponent,
+          },
+          {
+            path: 'manage-leave',
+            component: NewLeaveRequestComponent,
+          },
+          {
+            path: 'list',
+            component: NewLeaveRequestComponent,
+          },
+        ]
       },
     ]
   },

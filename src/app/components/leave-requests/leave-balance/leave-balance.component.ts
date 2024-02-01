@@ -5,15 +5,13 @@ import { LeaveBalance } from '../../../models/leaveBalance.model';
 @Component({
   selector: 'app-leave-balance',
   templateUrl: './leave-balance.component.html',
-  styleUrl: './leave-balance.component.css'
+  styleUrl: './leave-balance.component.scss'
 })
 export class LeaveBalanceComponent implements OnInit, OnChanges {
 
-
-
   @Input() leaveBalance: LeaveBalance | undefined;
 
-  private employeeService = inject(EmployeeService);
+  // private employeeService = inject(EmployeeService);
 
   ngOnInit(): void {
 
