@@ -12,6 +12,7 @@ import { EmployeeComponent } from './components/employee/employee.component';
 import { NewEmployeeComponent } from './components/employee/new-employee/new-employee.component';
 import { EmployeeDetailComponent } from './components/employee/employee-detail/employee-detail.component';
 import { EmployeeMyProfileComponent } from './components/employee/employee-my-profile/employee-my-profile.component';
+import { EmployeesListComponent } from './components/employee/employees-list/employees-list.component';
 
 const routes: Routes = [
   {
@@ -43,6 +44,10 @@ const routes: Routes = [
         component: EmployeeComponent,
         children: [
           {
+            path: 'list',
+            component: EmployeesListComponent,
+          },
+          {
             path: 'employees:id',
             component: EmployeeDetailComponent, //employee detail
           },
@@ -58,10 +63,7 @@ const routes: Routes = [
             path: 'manage-leave',
             component: NewLeaveRequestComponent,
           },
-          {
-            path: 'list',
-            component: NewLeaveRequestComponent,
-          },
+
         ]
       },
     ]

@@ -1,4 +1,5 @@
 <div class="container">
+  @if (leaveRequests.length > 0 && !loading) {
   <div class="col">
 		<h1>My leave requests</h1>
 	</div>
@@ -27,4 +28,9 @@
     </tbody>
   </table>
 </div>
+} @else if (!loading) {
+  <div class="col">
+		<h1 class="fw-bold">You didn't requested any leaves!!</h1>
+	</div>
+}
 </div>

@@ -1,7 +1,9 @@
+import { AdminService } from './../../../services/admin.service';
 import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NewEmployee } from '../../../models/newEmployee.model';
 import { EmployeeService } from '../../../services/employee.service';
+import { Manager } from '../../../models/manager.model';
 
 @Component({
   selector: 'app-new-employee',
@@ -10,7 +12,7 @@ import { EmployeeService } from '../../../services/employee.service';
 })
 export class NewEmployeeComponent implements OnInit {
 
-  managers = ['Manager 1', 'Manager 2', 'Manager 3']
+  managers: Manager[] = [];
 
   newEmployeeForm = new FormGroup({
     firstName: new FormControl('', Validators.required),
@@ -26,30 +28,38 @@ export class NewEmployeeComponent implements OnInit {
   });
 
   employeeService = inject(EmployeeService);
-  constructor() {}
+  adminService = inject(AdminService);
 
   ngOnInit(): void {
-
+    this.loadManagers();
   }
 
   onSubmit() {
 
     const newEmployee: NewEmployee = {
-      firstName: String(this.newEmployeeForm.value.firstName),
-      lastName: String(this.newEmployeeForm.value.lastName),
+      firstName: this.capitalizeFirstWord(String(this.newEmployeeForm.value.firstName)),
+      lastName: this.capitalizeFirstWord(String(this.newEmployeeForm.value.lastName)),
       gender: String(this.newEmployeeForm.value.lastName),
       birthDate: new Date(String(this.newEmployeeForm.value.birthDate)),
       email: String(this.newEmployeeForm.value.email),
-      city: String(this.newEmployeeForm.value.city),
+      city: this.capitalizeFirstWord(String(this.newEmployeeForm.value.city)),
       street: String(this.newEmployeeForm.value.street),
       phoneNumber: String(this.newEmployeeForm.value.phoneNumber),
-      manager: String(this.newEmployeeForm.value.manager),
+      managerId: String(this.newEmployeeForm.value.manager),
       joinedDate: new Date(String(this.newEmployeeForm.value.joinedDate)),
     }
-
     this.employeeService.addNewEmployee(newEmployee).subscribe(res=>{
       this.newEmployeeForm.reset();
-    })
+    });
   }
 
+  capitalizeFirstWord(word: string) {
+    return word.charAt(0).toUpperCase() + word.slice(1);
+  }
+
+  loadManagers() {
+    this.adminService.getListOfManagers().subscribe(res=>{
+      this.managers = res;
+    })
+  }
 }

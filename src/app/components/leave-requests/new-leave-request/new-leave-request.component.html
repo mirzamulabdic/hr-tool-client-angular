@@ -39,8 +39,12 @@
         <textarea matInput formControlName="comment" name="comment"></textarea>
       </mat-form-field>
     </div>
-
-    <div class="col">
+    @if (leaveForm.valid) {
+    <div class="col" >
+      <span class="text-muted">Leave duration: {{ getLeaveDaysWithoutWeekend(leaveForm.value.startDate, leaveForm.value.endDate )}} days</span>
+    </div>
+    }
+    <div class="col mt-3">
       <button class="btn btn-primary" [disabled]="!leaveForm.valid">Submit</button>
     </div>
   </form>

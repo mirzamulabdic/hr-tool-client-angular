@@ -31,6 +31,7 @@ import { loadingInterceptor } from './interceptors/loading.interceptor';
 import { EmployeeMyProfileComponent } from './components/employee/employee-my-profile/employee-my-profile.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { ProfileEditModalComponent } from './components/modals/profile-edit-modal/profile-edit-modal.component';
+import { EmployeesListComponent } from './components/employee/employees-list/employees-list.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -47,7 +48,8 @@ import { ProfileEditModalComponent } from './components/modals/profile-edit-moda
     NewEmployeeComponent,
     EmployeeDetailComponent,
     EmployeeMyProfileComponent,
-    ProfileEditModalComponent
+    ProfileEditModalComponent,
+    EmployeesListComponent
   ],
   imports: [
     BrowserModule,

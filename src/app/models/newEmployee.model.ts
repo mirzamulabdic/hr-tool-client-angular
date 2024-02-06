@@ -7,6 +7,6 @@ export interface NewEmployee {
   street: string;
   birthDate: Date;
   phoneNumber: string;
-  manager: string;
+  managerId: string;
   joinedDate: Date;
 }

@@ -47,8 +47,8 @@
     <div class="form-group mb-3 w-25">
       <label>Select Manager</label>
       <select class="form-control" formControlName="manager" name="manager">
-        <option *ngFor="let manager of managers" [value]="manager">
-          {{ manager }}
+        <option *ngFor="let manager of managers" [value]="manager.id">
+          {{ manager.firstName + ' ' + manager.lastName }}
         </option>
       </select>
     </div>

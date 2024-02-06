@@ -12,6 +12,7 @@ export class MyLeaveRequestsComponent implements OnInit {
 
 
   leaveRequests: LeaveRequest[] = [];
+  loading = false;
 
   leaveService = inject(LeaveRequestService);
   toastr = inject(ToastrService);
@@ -21,8 +22,10 @@ export class MyLeaveRequestsComponent implements OnInit {
   }
 
   loadLeaveRequests() {
+    this.loading = true;
     this.leaveService.getLeaveRequests().subscribe(res=>{
       this.leaveRequests = res;
+      this.loading = false;
     })
   }
 
@@ -34,7 +37,7 @@ export class MyLeaveRequestsComponent implements OnInit {
   }
 
   getLeaveTypeCorrectName(leaveType: string) {
-    if(leaveType === 'vacation') return 'Vacation'
+    if (leaveType === 'vacation') return 'Vacation'
     else if (leaveType === 'remotework') return 'Remote Work'
     else if (leaveType === 'sickday') return 'Sick Day'
     else return 'Family Leave'

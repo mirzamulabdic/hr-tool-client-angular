@@ -28,11 +28,10 @@ export class NewLeaveRequestComponent implements OnInit, OnChanges {
   toastr = inject(ToastrService);
 
   leaveBalance: LeaveBalance | undefined;
-
+  leaveDuration = 0;
 
 
   ngOnChanges(changes: SimpleChanges): void {
-
   }
 
   ngOnInit(): void {
@@ -49,7 +48,7 @@ export class NewLeaveRequestComponent implements OnInit, OnChanges {
     const startDate = new Date(this.leaveForm.value.startDate as string)
     const endDate = new Date(this.leaveForm.value.endDate as string)
 
-    const durationInDays = this.getWeekDaysWithoutWeekend(startDate, endDate);
+    const durationInDays = this.getLeaveDaysWithoutWeekend(startDate, endDate);
 
     if (durationInDays <= 0)
     {
@@ -102,9 +101,12 @@ export class NewLeaveRequestComponent implements OnInit, OnChanges {
     })
   }
 
-  getWeekDaysWithoutWeekend(startDate: Date, endDate: Date) {
-    const current = new Date(startDate);
-    const end = new Date(endDate);
+  getLeaveDaysWithoutWeekend(startDate: any, endDate: any) {
+    const startDateInDate = new Date(startDate)
+    const endDateInDate = new Date(endDate)
+
+    const current = new Date(startDateInDate);
+    const end = new Date(endDateInDate);
     let weekdays = 0;
 
     while (current <= end) {
