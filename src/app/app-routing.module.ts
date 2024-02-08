@@ -13,6 +13,7 @@ import { NewEmployeeComponent } from './components/employee/new-employee/new-emp
 import { EmployeeDetailComponent } from './components/employee/employee-detail/employee-detail.component';
 import { EmployeeMyProfileComponent } from './components/employee/employee-my-profile/employee-my-profile.component';
 import { EmployeesListComponent } from './components/employee/employees-list/employees-list.component';
+import { ManageLeaveRequestsComponent } from './components/employee/manage-leave-requests/manage-leave-requests.component';
 
 const routes: Routes = [
   {
@@ -60,8 +61,8 @@ const routes: Routes = [
             component: NewEmployeeComponent,
           },
           {
-            path: 'manage-leave',
-            component: NewLeaveRequestComponent,
+            path: 'manage-leave-requests',
+            component: ManageLeaveRequestsComponent,
           },
 
         ]

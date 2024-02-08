@@ -1,7 +1,7 @@
 import { LeaveBalance } from './../../../models/leaveBalance.model';
 import { Component, OnChanges, OnInit, SimpleChanges, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { LeaveRequest } from '../../../models/leaveRequest.model';
+import { LeaveRequest, LeaveTypeEnum } from '../../../models/leaveRequest.model';
 import { LeaveRequestService } from '../../../services/leave-request.service';
 import { ToastrService } from 'ngx-toastr';
 import { EmployeeService } from '../../../services/employee.service';
@@ -17,7 +17,7 @@ export class NewLeaveRequestComponent implements OnInit, OnChanges {
   loading = false;
 
   leaveForm = new FormGroup({
-    leaveType: new FormControl('', Validators.required),
+    leaveType: new FormControl(LeaveTypeEnum, Validators.required),
     startDate: new FormControl('',[ Validators.required]),
     endDate: new FormControl('', [ Validators.required]),
     comment: new FormControl(''),
@@ -55,13 +55,28 @@ export class NewLeaveRequestComponent implements OnInit, OnChanges {
       this.toastr.error('Invalid date!', 'Bad Request!');
       return;
     }
-    const leaveType = String(this.leaveForm.value.leaveType).replace(/\s/g, '').toLowerCase();
+    const leaveTypeString = String(this.leaveForm.value.leaveType).replace(" ", "");
 
-    if (leaveType != "vacation" && leaveType != "remotework" && leaveType != "sickday" && leaveType != "familyleave")
+    if (leaveTypeString != "Vacation" && leaveTypeString != "RemoteWork" && leaveTypeString != "SickDay" && leaveTypeString != "FamilyLeave")
     {
       this.toastr.error('Invalid leave type!', 'Bad Request!');
       return;
     }
+    let leaveType: LeaveTypeEnum;
+
+    switch(leaveTypeString) {
+      case 'Vacation': leaveType = LeaveTypeEnum.Vacation
+      break;
+      case 'RemoteWork': leaveType = LeaveTypeEnum.RemoteWork
+      break;
+      case 'SickDay': leaveType = LeaveTypeEnum.SickDay
+      break;
+      case 'FamilyLeave': leaveType = LeaveTypeEnum.FamilyLeave
+      break;
+    }
+
+
+
     const newLeave: LeaveRequest = {
       leaveType: leaveType,
       startDate: startDate,
@@ -79,9 +94,8 @@ export class NewLeaveRequestComponent implements OnInit, OnChanges {
               this.leaveBalance.familyDaysTaken = res.familyDaysTaken;
         }
         this.leaveForm.reset();
-        this.leaveForm.markAsPristine();
+        this.leaveForm.controls.leaveType.markAsPristine();
         this.leaveForm.markAsUntouched();
-        console.log(this.leaveForm)
         this.toastr.success('Leave request created!');
       },
       error: error=>{

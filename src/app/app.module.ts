@@ -32,6 +32,7 @@ import { EmployeeMyProfileComponent } from './components/employee/employee-my-pr
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { ProfileEditModalComponent } from './components/modals/profile-edit-modal/profile-edit-modal.component';
 import { EmployeesListComponent } from './components/employee/employees-list/employees-list.component';
+import { ManageLeaveRequestsComponent } from './components/employee/manage-leave-requests/manage-leave-requests.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,7 +50,8 @@ import { EmployeesListComponent } from './components/employee/employees-list/emp
     EmployeeDetailComponent,
     EmployeeMyProfileComponent,
     ProfileEditModalComponent,
-    EmployeesListComponent
+    EmployeesListComponent,
+    ManageLeaveRequestsComponent
   ],
   imports: [
     BrowserModule,

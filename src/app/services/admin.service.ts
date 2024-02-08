@@ -10,14 +10,14 @@ import { EmployeesWithRoles } from '../models/employeesWithRoles.model';
 })
 export class AdminService {
 
-  baseUrl = environment.apiUrl + 'manager'
+  baseUrlManagerController = environment.apiUrl + 'manager'
   http = inject(HttpClient);
 
   getUsersWithRoles() {
-    return this.http.get<EmployeesWithRoles[]>(this.baseUrl + '/users-with-roles');
+    return this.http.get<EmployeesWithRoles[]>(this.baseUrlManagerController + '/users-with-roles');
   }
 
   getListOfManagers() {
-    return this.http.get<Manager[]>(this.baseUrl + '/list-of-managers');
+    return this.http.get<Manager[]>(this.baseUrlManagerController + '/list-of-managers');
   }
 }

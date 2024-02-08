@@ -18,12 +18,12 @@
     </thead>
     <tbody>
       <tr *ngFor="let leave of leaveRequests">
-        <th>{{ getLeaveTypeCorrectName(leave.leaveType) }}</th>
-        <th>{{leave.startDate | date}}</th>
-        <th>{{leave.endDate | date}}</th>
+        <th>{{leave.leaveType}}</th>
+        <th>{{leave.startDate | date: 'dd-MMM-yyyy'}}</th>
+        <th>{{leave.endDate | date: 'dd-MMM-yyyy'}}</th>
         <th>{{leave.durationDays}}</th>
-        <th>{{leave.leaveStatus}}</th>
-        <th><button class="btn btn-info" [disabled]="leave.leaveStatus !='Pending'" (click)="cancelLeaveRequest(leave.leaveRequestId!)">Cancel</button></th>
+        <th ><p [ngClass]="{'text-success': leave.leaveStatus == 1 }">{{leave.leaveStatus}}</p></th>
+        <th><button class="btn btn-info" (click)="cancelLeaveRequest(leave.leaveRequestId!)">Cancel</button></th>
       </tr>
     </tbody>
   </table>

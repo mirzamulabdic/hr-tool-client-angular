@@ -9,7 +9,7 @@
           <th style="width: 20%;">Active Roles</th>
           <th style="width: 15%;">Joined Date</th>
           <th style="width: 15%;">Managed By (ManagerId)</th>
-          <th style="width: 25%;"></th>
+          <th style="width: 30%;"></th>
         </tr>
       </thead>
       <tbody>
@@ -19,9 +19,9 @@
           <th >Junior</th>
           <th >Bit4</th>
           <th >{{employee.roles}}</th>
-          <th >{{employee.joinedDate | date: 'dd/MM/yyyy'}}</th>
+          <th >{{employee.joinedDate | date: 'dd-MMM-yyyy' }}</th>
           <th >{{employee.managedByManagerId ? employee.managedByManagerId : '/'}}</th>
-          <th ><button class="btn btn-info" >Edit User</button></th>
+          <th ><button class="btn btn-info "  >Edit User</button></th>
         </tr>
       }
       </tbody>
