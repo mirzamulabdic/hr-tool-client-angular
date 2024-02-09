@@ -62,6 +62,10 @@ export class AuthService {
   }
 
   setCurrentUser(user: User) {
+    user.roles = [];
+    const roles = this.getDecodedToken(user.token).role;
+    Array.isArray(roles) ? user.roles = roles : user.roles.push(roles);
+
     localStorage.setItem('token', JSON.stringify(user.token));
     localStorage.setItem('user', JSON.stringify(user));
     this.authStatusListener.next(true);
@@ -74,6 +78,10 @@ export class AuthService {
     if (token){
       return token;
     } else return '';
+  }
+
+  getDecodedToken(token: string) {
+    return JSON.parse(atob(token.split('.')[1]));
   }
 
   logout() {

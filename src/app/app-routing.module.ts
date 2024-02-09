@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './components/login/login.component';
-import { HomeComponent } from './components/home/home.component';
+
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { authGuard } from './guards/auth.guard';
 import { LeaveBalanceComponent } from './components/leave-requests/leave-balance/leave-balance.component';
@@ -14,6 +14,8 @@ import { EmployeeDetailComponent } from './components/employee/employee-detail/e
 import { EmployeeMyProfileComponent } from './components/employee/employee-my-profile/employee-my-profile.component';
 import { EmployeesListComponent } from './components/employee/employees-list/employees-list.component';
 import { ManageLeaveRequestsComponent } from './components/employee/manage-leave-requests/manage-leave-requests.component';
+import { adminGuard } from './guards/admin.guard';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 const routes: Routes = [
   {
@@ -24,7 +26,7 @@ const routes: Routes = [
       {path:'', redirectTo: '/dashboard', pathMatch:'full'},
       {
         path: 'dashboard',
-        component: HomeComponent,
+        component: DashboardComponent,
       },
       {
         path: 'leave',
@@ -43,6 +45,7 @@ const routes: Routes = [
       {
         path: 'employees',
         component: EmployeeComponent,
+        canActivate: [adminGuard],
         children: [
           {
             path: 'list',
@@ -51,10 +54,6 @@ const routes: Routes = [
           {
             path: 'employees:id',
             component: EmployeeDetailComponent, //employee detail
-          },
-          {
-            path: 'my-profile',
-            component: EmployeeMyProfileComponent, //employee detail
           },
           {
             path: 'new-employee',
@@ -66,6 +65,10 @@ const routes: Routes = [
           },
 
         ]
+      },
+      {
+        path: 'employee/my-profile',
+        component: EmployeeMyProfileComponent, //employee detail
       },
     ]
   },

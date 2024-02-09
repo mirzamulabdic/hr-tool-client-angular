@@ -1,0 +1,28 @@
+<div class="container mt-4">
+  <div class="row">
+      <div class="col-xl-6">
+          <div class="card">
+            <div class="card-body pb-0">
+              <div class="row align-items-center">
+                <h3 class="card-title mb-4 text-muted">Quick Access</h3>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-xl-4">
+        <div class="card">
+          <div class="tab-content p-4">
+              <div class="tab-pane active show" id="tasks-tab" role="tabpanel" >
+                  <h3 class="card-title mb-4 text-muted">Employees on Leave Today</h3>
+                  @for (event of leaveEvents; track $index) {
+                    <app-leave-event-card [leaveEvent]="event"></app-leave-event-card>
+                  }
+              </div>
+              </div>
+          </div>
+       </div>
+
+
+  </div>
+  </div>

@@ -18,10 +18,10 @@ export class MyLeaveRequestsComponent implements OnInit {
   toastr = inject(ToastrService);
 
   ngOnInit(): void {
-    this.loadLeaveRequests();
+    this.loadMyLeaveRequests();
   }
 
-  loadLeaveRequests() {
+  loadMyLeaveRequests() {
     this.loading = true;
     this.leaveService.getLeaveRequests().subscribe(res=>{
       this.leaveRequests = res;

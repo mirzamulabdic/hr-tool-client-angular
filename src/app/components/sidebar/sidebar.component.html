@@ -4,11 +4,11 @@
       <ul class="nav flex-column mb-3">
         <li class="nav-item">
           <div class="nav-link d-flex align-items-center gap-2 active text-dark justify-content-center">
-          <img class="rounded-circle me-2" class="img-fluid  shadow-4 rounded-circle me-2" width="150" src="{{'./assets/user.png'}}" alt=""
+          <img class="rounded-circle me-2" class="img-fluid  shadow-4 rounded-circle me-2" width="150" src="{{'./assets/user.jpg'}}" alt=""
             >
           </div>
           <div class="nav-link d-flex align-items-center text-centergap-2 active text-dark justify-content-center">
-           <p class="fw-bold text-dark"> Mirza Mulabdic </p>
+           <p class="fw-bold text-dark"> {{user?.fullName}} </p>
           </div>
         </li>
       </ul>
@@ -34,6 +34,7 @@
         </li>
       </ul>
 
+      <div *appHasRole="['Admin', 'Manager']">
       <hr class="my-3">
 
       <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 fw-bold text-body-secondary text-uppercase">
@@ -62,12 +63,12 @@
           </a>
         </li>
       </ul>
-
+    </div>
       <hr class="my-3">
 
       <ul class="nav flex-column mb-auto">
         <li class="nav-item">
-          <a class="nav-link d-flex align-items-center gap-2 text-dark" routerLink="/employees/my-profile">
+          <a class="nav-link d-flex align-items-center gap-2 text-dark" routerLink="/employee/my-profile">
             <svg class="bi"><use xlink:href="#gear-wide-connected"/></svg>
             My profile
           </a>

@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './components/home/home.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { LoginComponent } from './components/login/login.component';
 import { NavComponent } from './components/nav/nav.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
@@ -33,10 +33,13 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { ProfileEditModalComponent } from './components/modals/profile-edit-modal/profile-edit-modal.component';
 import { EmployeesListComponent } from './components/employee/employees-list/employees-list.component';
 import { ManageLeaveRequestsComponent } from './components/employee/manage-leave-requests/manage-leave-requests.component';
+import { HasRoleDirective } from './directives/has-role.directive';
+import { LeaveEventCardComponent } from './components/dashboard/leave-events/leave-event-card/leave-event-card.component';
+
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
+    DashboardComponent,
     LoginComponent,
     NavComponent,
     NotFoundComponent,
@@ -51,7 +54,9 @@ import { ManageLeaveRequestsComponent } from './components/employee/manage-leave
     EmployeeMyProfileComponent,
     ProfileEditModalComponent,
     EmployeesListComponent,
-    ManageLeaveRequestsComponent
+    ManageLeaveRequestsComponent,
+    HasRoleDirective,
+    LeaveEventCardComponent
   ],
   imports: [
     BrowserModule,

@@ -1,6 +1,6 @@
 import { LeaveBalance } from './../../../models/leaveBalance.model';
 import { Component, OnChanges, OnInit, SimpleChanges, inject } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { LeaveRequest, LeaveTypeEnum } from '../../../models/leaveRequest.model';
 import { LeaveRequestService } from '../../../services/leave-request.service';
 import { ToastrService } from 'ngx-toastr';
@@ -28,7 +28,19 @@ export class NewLeaveRequestComponent implements OnInit, OnChanges {
   toastr = inject(ToastrService);
 
   leaveBalance: LeaveBalance | undefined;
+  leaveRequests: LeaveRequest[] = [];
   leaveDuration = 0;
+
+  todayDate: Date = new Date();
+
+  unavailableDates  = {
+    startDate:  new Date,
+    endDate: new Date
+  }
+
+  constructor(private formBuilder: FormBuilder) {
+
+  }
 
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -36,6 +48,7 @@ export class NewLeaveRequestComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.getLeaveBalance();
+    this.loadMyLeaveRequests();
   }
 
   validateStartDate(control: FormControl) {
@@ -45,8 +58,26 @@ export class NewLeaveRequestComponent implements OnInit, OnChanges {
   }
 
   onSubmit() {
+
     const startDate = new Date(this.leaveForm.value.startDate as string)
     const endDate = new Date(this.leaveForm.value.endDate as string)
+    let checkIfDateOverlaps = 0;
+
+    this.leaveRequests.forEach(val => {
+
+      this.unavailableDates.startDate = new Date(val.startDate);
+      this.unavailableDates.endDate = new Date(val.endDate);
+
+      if (this.dateRangeOverlaps(startDate, endDate, this.unavailableDates.startDate, this.unavailableDates.endDate)) {
+        checkIfDateOverlaps++;
+        return;
+      }
+    })
+
+    if (checkIfDateOverlaps > 0) {
+      this.toastr.warning('You already have leave in that period');
+      return;
+    }
 
     const durationInDays = this.getLeaveDaysWithoutWeekend(startDate, endDate);
 
@@ -106,12 +137,26 @@ export class NewLeaveRequestComponent implements OnInit, OnChanges {
     })
   }
 
+  dateRangeOverlaps(newStartDate: Date, newEndDate: Date, existingStartDate: Date, existingEndDate: Date) {
+    if (newStartDate <= existingStartDate && existingStartDate <= newEndDate) return true;
+    if (newStartDate <= existingEndDate   && existingEndDate   <= newEndDate) return true;
+    if (existingStartDate <  newStartDate && newEndDate   <  existingEndDate) return true;
+    return false;
+  }
+
 
   getLeaveBalance() {
     this.loading = true;
     this.employeeService.getLeaveBalance().subscribe(res=>{
       this.leaveBalance = res;
       this.loading = false;
+    })
+  }
+
+  loadMyLeaveRequests() {
+    this.leaveService.getLeaveRequests().subscribe(res=>{
+      this.leaveRequests = res;
+
     })
   }
 
