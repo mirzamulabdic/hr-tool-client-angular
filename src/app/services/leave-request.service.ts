@@ -18,20 +18,23 @@ export class LeaveRequestService {
     return this.http.post<Employee>(this.baseUrl + '/new-request', newLeave);
   }
 
-  getLeaveRequests() {
+  getMyLeaveRequests() {
     return this.http.get<LeaveRequest[]>(this.baseUrl);
   }
 
-  getLeaveRequestsForMyEmployees() {
-    return this.http.get<LeaveRequest[]>(this.baseUrl + '/all-leaves-from-employees');
-  }
 
   cancelLeaveREquest(leaveRequestId: number) {
     return this.http.delete(this.baseUrl + '/cancel/' + leaveRequestId);
   }
 
 
+
+
   //MANAGER
+
+  getLeaveRequestsForMyEmployees() {
+    return this.http.get<LeaveRequest[]>(this.baseUrl + '/all-leaves-from-employees');
+  }
 
   reviewLeaveRequest(reviewLeaveRequest: ReviewLeaveRequest) {
     return this.http.put(this.baseUrl + '/review-leave-request', reviewLeaveRequest);

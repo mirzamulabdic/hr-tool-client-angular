@@ -23,7 +23,7 @@ export class MyLeaveRequestsComponent implements OnInit {
 
   loadMyLeaveRequests() {
     this.loading = true;
-    this.leaveService.getLeaveRequests().subscribe(res=>{
+    this.leaveService.getMyLeaveRequests().subscribe(res=>{
       this.leaveRequests = res;
       this.loading = false;
     })

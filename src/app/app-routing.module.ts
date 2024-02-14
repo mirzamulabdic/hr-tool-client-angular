@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './components/login/login.component';
-
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { authGuard } from './guards/auth.guard';
 import { LeaveBalanceComponent } from './components/leave-requests/leave-balance/leave-balance.component';
@@ -16,6 +15,8 @@ import { EmployeesListComponent } from './components/employee/employees-list/emp
 import { ManageLeaveRequestsComponent } from './components/employee/manage-leave-requests/manage-leave-requests.component';
 import { adminGuard } from './guards/admin.guard';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { leaveBalanceResolverResolver } from './resolvers/leave-balance-resolver.resolver';
+import { leaveRequestsResolverResolver } from './resolvers/leave-requests-resolver.resolver';
 
 const routes: Routes = [
   {
@@ -34,6 +35,7 @@ const routes: Routes = [
         children: [
           {
             path: 'apply',
+            resolve: {leaveBalance: leaveBalanceResolverResolver, myLeaveRequests: leaveRequestsResolverResolver},
             component: NewLeaveRequestComponent,
           },
           {

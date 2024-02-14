@@ -1,9 +1,11 @@
+import { GenderEnum } from "./newEmployee.model";
+
 export interface Employee {
   employeeId: number;
   firstName: string;
   lastName: string;
   email: string;
-  gender: string;
+  gender: GenderEnum;
   city: string;
   street: string;
   birthDate: Date;

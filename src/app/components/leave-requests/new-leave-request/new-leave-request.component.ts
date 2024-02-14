@@ -5,6 +5,8 @@ import { LeaveRequest, LeaveTypeEnum } from '../../../models/leaveRequest.model'
 import { LeaveRequestService } from '../../../services/leave-request.service';
 import { ToastrService } from 'ngx-toastr';
 import { EmployeeService } from '../../../services/employee.service';
+import { ActivatedRoute } from '@angular/router';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-new-leave-request',
@@ -23,9 +25,10 @@ export class NewLeaveRequestComponent implements OnInit, OnChanges {
     comment: new FormControl(''),
   });
 
-  leaveService = inject(LeaveRequestService);
-  employeeService = inject(EmployeeService);
+  private leaveService = inject(LeaveRequestService);
+  private employeeService = inject(EmployeeService);
   toastr = inject(ToastrService);
+  private route = inject(ActivatedRoute);
 
   leaveBalance: LeaveBalance | undefined;
   leaveRequests: LeaveRequest[] = [];
@@ -47,8 +50,10 @@ export class NewLeaveRequestComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    this.getLeaveBalance();
-    this.loadMyLeaveRequests();
+    this.route.data.subscribe(data=>{
+      this.leaveBalance = data['leaveBalance']
+      this.leaveRequests = data['myLeaveRequests']
+    })
   }
 
   validateStartDate(control: FormControl) {
@@ -59,8 +64,12 @@ export class NewLeaveRequestComponent implements OnInit, OnChanges {
 
   onSubmit() {
 
-    const startDate = new Date(this.leaveForm.value.startDate as string)
-    const endDate = new Date(this.leaveForm.value.endDate as string)
+    const activationStartDate = new Date(this.leaveForm.value.startDate as string)
+    const activationEndDate = new Date(this.leaveForm.value.endDate as string)
+
+    const startDate = new Date(activationStartDate.getFullYear(), activationStartDate.getMonth(), activationStartDate.getDate(), 0,  0, 0);
+    const endDate = new Date(activationEndDate.getFullYear(), activationEndDate.getMonth(), activationEndDate.getDate(), 0,  0, 0);
+
     let checkIfDateOverlaps = 0;
 
     this.leaveRequests.forEach(val => {
@@ -154,7 +163,7 @@ export class NewLeaveRequestComponent implements OnInit, OnChanges {
   }
 
   loadMyLeaveRequests() {
-    this.leaveService.getLeaveRequests().subscribe(res=>{
+    this.leaveService.getMyLeaveRequests().subscribe(res=>{
       this.leaveRequests = res;
 
     })

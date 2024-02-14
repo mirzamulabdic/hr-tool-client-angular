@@ -1,7 +1,7 @@
 import { AdminService } from './../../../services/admin.service';
 import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { NewEmployee } from '../../../models/newEmployee.model';
+import { GenderEnum, NewEmployee } from '../../../models/newEmployee.model';
 import { EmployeeService } from '../../../services/employee.service';
 import { Manager } from '../../../models/manager.model';
 
@@ -13,6 +13,13 @@ import { Manager } from '../../../models/manager.model';
 export class NewEmployeeComponent implements OnInit {
 
   managers: Manager[] = [];
+
+  adminManager: Manager = {
+    id: 1,
+    firstName: 'Admin',
+    lastName: '',
+    email: ''
+  }
 
   newEmployeeForm = new FormGroup({
     firstName: new FormControl('', Validators.required),
@@ -39,7 +46,7 @@ export class NewEmployeeComponent implements OnInit {
     const newEmployee: NewEmployee = {
       firstName: this.capitalizeFirstWord(String(this.newEmployeeForm.value.firstName)),
       lastName: this.capitalizeFirstWord(String(this.newEmployeeForm.value.lastName)),
-      gender: String(this.newEmployeeForm.value.lastName),
+      gender: String(this.newEmployeeForm.value.lastName) == 'Male' ? GenderEnum.Male : GenderEnum.Female,
       birthDate: new Date(String(this.newEmployeeForm.value.birthDate)),
       email: String(this.newEmployeeForm.value.email),
       city: this.capitalizeFirstWord(String(this.newEmployeeForm.value.city)),
@@ -58,8 +65,9 @@ export class NewEmployeeComponent implements OnInit {
   }
 
   loadManagers() {
-    this.adminService.getListOfManagers().subscribe(res=>{
+    this.adminService.getListOfManagers().subscribe(res=> {
       this.managers = res;
+      if (res.length == 0)  this.managers.push(this.adminManager);
     })
   }
 }

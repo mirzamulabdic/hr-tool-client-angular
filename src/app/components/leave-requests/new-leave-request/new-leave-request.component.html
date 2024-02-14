@@ -19,7 +19,7 @@
 
     <mat-form-field color="accent">
       <mat-label>From Date</mat-label>
-      <input matInput formControlName="startDate"  [min]="todayDate" name="startDate" [matDatepicker]="picker1">
+      <input matInput formControlName="startDate" [min]="todayDate" name="startDate" [matDatepicker]="picker1">
 
       <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
       <mat-datepicker #picker1></mat-datepicker>
@@ -27,7 +27,7 @@
 
     <mat-form-field color="accent">
       <mat-label>To Date</mat-label>
-      <input matInput formControlName="endDate" [min]="todayDate"  name="endDate" [matDatepicker]="picker2">
+      <input matInput formControlName="endDate" [min]="todayDate" name="endDate" [matDatepicker]="picker2">
 
       <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
       <mat-datepicker #picker2 color="primary"></mat-datepicker>
@@ -45,7 +45,7 @@
     </div>
     }
     <div class="col mt-3">
-      <button class="btn btn-primary" >Submit</button>
+      <button class="btn btn-primary" [disabled]="!leaveForm.valid">Submit</button>
     </div>
   </form>
 </div>

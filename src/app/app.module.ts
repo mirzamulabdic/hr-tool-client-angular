@@ -77,7 +77,8 @@ import { LeaveEventCardComponent } from './components/dashboard/leave-events/lea
       type: 'line-scale-party'
     }),
     [ModalModule.forRoot()],
-    FormsModule
+    FormsModule,
+    
   ],
   providers: [
     provideAnimations(),
