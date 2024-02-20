@@ -46,7 +46,7 @@ export class NewEmployeeComponent implements OnInit {
     const newEmployee: NewEmployee = {
       firstName: this.capitalizeFirstWord(String(this.newEmployeeForm.value.firstName)),
       lastName: this.capitalizeFirstWord(String(this.newEmployeeForm.value.lastName)),
-      gender: String(this.newEmployeeForm.value.lastName) == 'Male' ? GenderEnum.Male : GenderEnum.Female,
+      gender: String(this.newEmployeeForm.value.gender) == 'Male' ? GenderEnum.Male : GenderEnum.Female,
       birthDate: new Date(String(this.newEmployeeForm.value.birthDate)),
       email: String(this.newEmployeeForm.value.email),
       city: this.capitalizeFirstWord(String(this.newEmployeeForm.value.city)),

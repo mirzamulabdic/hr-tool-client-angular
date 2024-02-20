@@ -1,40 +1,87 @@
 <div class="container mt-4">
-  @if (leaveRequests && !loading) {
-  <div class="col">
-		<h1>Review leave requests</h1>
-	</div>
+  @if (leaveRequests.length > 0 && !loading) {
+
+  <div class="container mt-3">
+    <form #form="ngForm" class="d-flex mb-3"  autocomplete="off">
+      <div class="col">
+        <h1>Review Leave Requests</h1>
+      </div>
+
+      <div class="col">
+        <div class="btn-group float-end">
+          <button
+          type="button"
+          class="btn btn-secondary"
+          [ngClass]="{'active': userParams?.leaveStatus == 0}"
+          (click)="getLeaveRequests(StatusEnum.Pending)"
+
+          >Pending</button>
+
+          <button
+          type="button"
+          class="btn btn-secondary"
+          [ngClass]="{'active': userParams?.leaveStatus == 1}"
+          (click)="getLeaveRequests(StatusEnum.Approved)"
+
+          >Past Leave Requests</button>
+        </div>
+      </div>
+    </form>
+  </div>
 
   <div class="row">
     <table class="table">
-      <thead>
-        <tr>
+      <thead class="t-haed">
+        <tr class="t-haed">
           <th style="width: 15%;">Created By</th>
+          <th style="width: 15%;">Created At</th>
           <th style="width: 15%;">Leave Type</th>
-          <th style="width: 15%;">Start Date</th>
-          <th style="width: 15%;">End Date</th>
-          <th style="width: 15%;">Days</th>
+          <th style="width: 17%;">Start Date</th>
+          <th style="width: 17%;">End Date</th>
+          <th style="width: 10%;">Days</th>
           <th style="width: 15%;">Status</th>
-          <th style="width: 20%;"></th>
-          <th style="width: 20%;"></th>
+          <th style="width: 8%;"></th>
+          <th style="width: 8%;"></th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let leave of leaveRequests">
           <th>{{ leave.submitterFullName  }}</th>
+          <th>NULL /</th>
           <th>{{ leave.leaveType }}</th>
           <th>{{leave.startDate | date: 'dd-MMM-yyyy'}}</th>
           <th>{{leave.endDate | date: 'dd-MMM-yyyy'}}</th>
           <th>{{leave.durationDays}}</th>
           <th>{{leave.leaveStatus}}</th>
-          <th><button class="btn btn-success"  (click)="reviewLeaveRequest(leave, 1)">Approve</button></th>
-          <th><button class="btn btn-danger" (click)="reviewLeaveRequest(leave, 2)">Reject</button></th>
+          @if (userParams?.leaveStatus == StatusEnum.Pending) {
+            <th><button class="btn btn"  (click)="reviewLeaveRequest(leave, 1)" style="background-color: #04AA6D; color: white;">Approve</button></th>
+            <th><button class="btn btn-danger" (click)="reviewLeaveRequest(leave, 2)">Reject</button></th>
+          }
         </tr>
       </tbody>
     </table>
   </div>
   } @else if (!loading) {
-    <div class="col">
-      <h1 class="fw-bold">You didn't requested any leaves!!</h1>
+    <div class="col mt-4">
+      <h1 class="fw-bold">There is no new leave requests to review!</h1>
     </div>
   }
 </div>
+
+@if (pagination) {
+  <div class="d-flex justify-content-center  text-info">
+    <pagination
+    [boundaryLinks]="true"
+    [totalItems]="pagination.totalItems"
+    [itemsPerPage]="pagination.itemsPerPage"
+    [maxSize]="10"
+    [(ngModel)]="pagination.currentPage"
+    (pageChanged)="pageChanged($event)"
+    previousText="&lsaquo;"
+    nextText="&rsaquo;"
+    firstText="&laquo;"
+    lastText="&raquo;"
+    class=" text-info">
+</pagination>
+  </div>
+}

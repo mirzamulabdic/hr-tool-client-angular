@@ -1,7 +1,9 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { LeaveRequestService } from '../../../services/leave-request.service';
-import { LeaveRequest } from '../../../models/leaveRequest.model';
+import { LeaveRequest, LeaveStatusEnum, LeaveTypeEnum } from '../../../models/leaveRequest.model';
 import { ToastrService } from 'ngx-toastr';
+import { Pagination } from '../../../models/pagination';
+import { UserParams } from '../../../models/userParams';
 
 @Component({
   selector: 'app-my-leave-requests',
@@ -12,21 +14,40 @@ export class MyLeaveRequestsComponent implements OnInit {
 
 
   leaveRequests: LeaveRequest[] = [];
+  pagination: Pagination | undefined;
+  userParams: UserParams | undefined;
+  public StatusEnum = LeaveStatusEnum;
+
   loading = false;
+
+  public LeaveType!: LeaveTypeEnum
 
   leaveService = inject(LeaveRequestService);
   toastr = inject(ToastrService);
+
+  constructor() {
+    this.userParams = this.leaveService.getUserParams();
+  }
 
   ngOnInit(): void {
     this.loadMyLeaveRequests();
   }
 
-  loadMyLeaveRequests() {
+  loadMyLeaveRequests(leaveStatusForEnum?: LeaveStatusEnum) {
     this.loading = true;
-    this.leaveService.getMyLeaveRequests().subscribe(res=>{
-      this.leaveRequests = res;
-      this.loading = false;
-    })
+    if (this.userParams) {
+      if (leaveStatusForEnum != undefined) {
+        this.userParams.leaveStatus = leaveStatusForEnum!;
+      }
+      this.leaveService.setUserParams(this.userParams);
+      this.leaveService.getMyLeaveRequests(this.userParams).subscribe(response=>{
+        if (response.result && response.pagination) {
+          this.leaveRequests = response.result;
+          this.pagination = response.pagination;
+          this.loading = false;
+        }
+      })
+    }
   }
 
   cancelLeaveRequest(leaveId: number) {
@@ -36,10 +57,11 @@ export class MyLeaveRequestsComponent implements OnInit {
     })
   }
 
-  getLeaveTypeCorrectName(leaveType: string) {
-    if (leaveType === 'vacation') return 'Vacation'
-    else if (leaveType === 'remotework') return 'Remote Work'
-    else if (leaveType === 'sickday') return 'Sick Day'
-    else return 'Family Leave'
+  pageChanged(event: any) {
+    if (this.userParams && this.userParams?.pageNumber !== event.page) {
+      this.userParams.pageNumber = event.page;
+      this.leaveService.setUserParams(this.userParams);
+      this.loadMyLeaveRequests();
+    }
   }
 }

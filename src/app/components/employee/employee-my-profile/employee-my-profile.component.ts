@@ -14,6 +14,8 @@ export class EmployeeMyProfileComponent implements OnInit {
 
   bsModalRef: BsModalRef<ProfileEditModalComponent> = new BsModalRef<ProfileEditModalComponent>();
   employee: Employee | undefined;
+  loading = false;
+
   private modalService = inject(BsModalService);
   private employeeService = inject(EmployeeService);
   private authService = inject(AuthService);
@@ -23,8 +25,10 @@ export class EmployeeMyProfileComponent implements OnInit {
   }
 
   loadProfileInfo() {
+    this.loading = true;
     this.employeeService.getEmployeeInfo().subscribe(emp=>{
       this.employee = emp;
+      this.loading = false;
     })
   }
 

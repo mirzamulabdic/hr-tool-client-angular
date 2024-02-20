@@ -7,5 +7,5 @@ export const leaveRequestsResolverResolver: ResolveFn<LeaveRequest[]> = (route, 
 
   const leaveRequestService = inject(LeaveRequestService);
 
-  return leaveRequestService.getMyLeaveRequests();
+  return leaveRequestService.getAllMyLeaveRequests();
 };

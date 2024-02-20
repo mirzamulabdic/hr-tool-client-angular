@@ -16,6 +16,27 @@
   padding: .75rem 1rem;
 }
 
+.quick-access-link {
+  text-decoration: none;
+  text-align: center;
+}
+
+.quick-access-icon {
+  width: 70px;
+  height: 60px;
+  margin-bottom: 10px;
+}
+
+.quick-access-text {
+  font-size: 16px;
+  color: #2c2c2c;
+  text-decoration: none;
+}
+
+a:link {
+  text-decoration: none;
+}
+
 body{
   margin-top:20px;
   background:#f7f8fa

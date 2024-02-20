@@ -11,6 +11,5 @@ export class LeaveEventCardComponent implements OnInit {
   @Input() leaveEvent: LeaveRequest | undefined;
 
   ngOnInit(): void {
-    console.log(this.leaveEvent)
   }
 }

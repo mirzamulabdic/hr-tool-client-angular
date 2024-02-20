@@ -2,10 +2,29 @@
   <div class="row">
       <div class="col-xl-6">
           <div class="card">
-            <div class="card-body pb-0">
-              <div class="row align-items-center">
-                <h3 class="card-title mb-4 text-muted">Quick Access</h3>
+            <div class="card-body p-4">
+              <h3 class="card-title mb-4 text-muted fw-bold">Quick Access</h3>
+                <div class="row align-items-center text-center">
+                  <div class="col-md-4">
+                    <a routerLink="/leave/apply" class="">
+                      <img src="{{'./assets/apply-leave.png'}}" class="quick-access-icon">
+                      <p class="quick-access-text">Apply Leave</p>
+                    </a>
                   </div>
+
+                  <div class="col-md-4">
+                    <a routerLink="/leave/my-leave-requests" class="">
+                      <img src="{{'./assets/my-leave.png'}}" class="quick-access-icon">
+                      <p class="quick-access-text">My Leave</p>
+                    </a>
+                  </div>
+                  <div  class="col-md-4">
+                    <a routerLink="/leave/leave-calendar" class="">
+                      <img src="{{'./assets/calendar.png'}}" class="quick-access-icon">
+                      <p class="quick-access-text">Leave Calendar</p>
+                    </a>
+                  </div>
+                </div>
               </div>
           </div>
       </div>
@@ -14,9 +33,15 @@
         <div class="card">
           <div class="tab-content p-4">
               <div class="tab-pane active show" id="tasks-tab" role="tabpanel" >
-                  <h3 class="card-title mb-4 text-muted">Employees on Leave Today</h3>
-                  @for (event of leaveEvents; track $index) {
-                    <app-leave-event-card [leaveEvent]="event"></app-leave-event-card>
+                  <h3 class="card-title mb-4 text-muted fw-bold">Employees on Leave Today</h3>
+                  @if (leaveEvents.length > 0) {
+                    @for (event of leaveEvents; track $index) {
+                      <app-leave-event-card [leaveEvent]="event"></app-leave-event-card>
+                    }
+                  } @else {
+                    <div>
+                      <h3 class="fw-bolder text-info">No one is on leave today!</h3>
+                    </div>
                   }
               </div>
               </div>

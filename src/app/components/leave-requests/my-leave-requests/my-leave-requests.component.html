@@ -1,36 +1,92 @@
 <div class="container">
-  @if (leaveRequests.length > 0 && !loading) {
-  <div class="col">
-		<h1>My leave requests</h1>
-	</div>
 
-<div class="row">
-  <table class="table">
-    <thead>
-      <tr>
-        <th style="width: 20%;">Leave Type</th>
-        <th style="width: 25%;">Start Date</th>
-        <th style="width: 25%;">End Date</th>
-        <th style="width: 15%;">Days</th>
-        <th style="width: 25%;">Status</th>
-        <th style="width: 30%;"></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let leave of leaveRequests">
-        <th>{{leave.leaveType}}</th>
-        <th>{{leave.startDate | date: 'dd-MMM-yyyy'}}</th>
-        <th>{{leave.endDate | date: 'dd-MMM-yyyy'}}</th>
-        <th>{{leave.durationDays}}</th>
-        <th ><p [ngClass]="{'text-success': leave.leaveStatus == 1 }">{{leave.leaveStatus}}</p></th>
-        <th><button class="btn btn-info" (click)="cancelLeaveRequest(leave.leaveRequestId!)">Cancel</button></th>
-      </tr>
-    </tbody>
-  </table>
-</div>
+
+
+
+  <div class="container mt-3">
+    <form #form="ngForm" class="d-flex mb-3"  autocomplete="off">
+      <div class="col">
+        <h1>My leave requests</h1>
+      </div>
+
+      <div class="col">
+        <div class="btn-group float-end">
+          <button
+          type="button"
+          class="btn btn-secondary"
+          [ngClass]="{'active': userParams?.leaveStatus == 0}"
+          (click)="loadMyLeaveRequests(StatusEnum.Pending)"
+          >Pending</button>
+          <button
+          type="button"
+          class="btn btn-secondary"
+          [ngClass]="{'active': userParams?.leaveStatus == 1}"
+          (click)="loadMyLeaveRequests(StatusEnum.Approved)"
+          >Scheduled</button>
+          <button
+          type="button"
+          class="btn btn-secondary"
+          [ngClass]="{'active': userParams?.leaveStatus == 3}"
+          (click)="loadMyLeaveRequests(StatusEnum.Taken)"
+          >Taken</button>
+          <button
+          type="button"
+          class="btn btn-secondary"
+          [ngClass]="{'active': userParams?.leaveStatus == 2}"
+          (click)="loadMyLeaveRequests(StatusEnum.Rejected)"
+          >Rejected</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+@if (leaveRequests.length > 0 && !loading) {
+  <div class="row">
+    <table class="table">
+      <thead>
+        <tr class="t-head">
+          <th style="width: 20%;">Leave Type</th>
+          <th style="width: 25%;">Start Date</th>
+          <th style="width: 25%;">End Date</th>
+          <th style="width: 15%;">Days</th>
+          <th style="width: 25%;">Status</th>
+          <th style="width: 30%;"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let leave of leaveRequests">
+          <th>{{leave.leaveType}}</th>
+          <th>{{leave.startDate | date: 'dd-MMM-yyyy'}}</th>
+          <th>{{leave.endDate | date: 'dd-MMM-yyyy'}}</th>
+          <th>{{leave.durationDays}}</th>
+          <th ><p [ngClass]="{'text-success': leave.leaveStatus == 1 }">{{leave.leaveStatus}}</p></th>
+          <th><button *ngIf="userParams?.leaveStatus != 3" class="btn btn-info" (click)="cancelLeaveRequest(leave.leaveRequestId!)">Cancel</button></th>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 } @else if (!loading) {
   <div class="col">
-		<h1 class="fw-bold">You didn't requested any leaves!!</h1>
+		<h2 class="fw-bolder text-info">There is no {{userParams?.leaveStatus == 0 ? 'Pending' : userParams?.leaveStatus == 1 ? 'Scheduled' : 'Taken'}} leave requests!</h2>
 	</div>
 }
 </div>
+
+
+@if (pagination) {
+  <div class="d-flex justify-content-center  text-info">
+    <pagination
+    [boundaryLinks]="true"
+    [totalItems]="pagination.totalItems"
+    [itemsPerPage]="pagination.itemsPerPage"
+    [maxSize]="10"
+    [(ngModel)]="pagination.currentPage"
+    (pageChanged)="pageChanged($event)"
+    previousText="&lsaquo;"
+    nextText="&rsaquo;"
+    firstText="&laquo;"
+    lastText="&raquo;"
+    class=" text-info">
+</pagination>
+  </div>
+}

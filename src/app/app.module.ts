@@ -35,6 +35,7 @@ import { EmployeesListComponent } from './components/employee/employees-list/emp
 import { ManageLeaveRequestsComponent } from './components/employee/manage-leave-requests/manage-leave-requests.component';
 import { HasRoleDirective } from './directives/has-role.directive';
 import { LeaveEventCardComponent } from './components/dashboard/leave-events/leave-event-card/leave-event-card.component';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
 
 @NgModule({
   declarations: [
@@ -78,7 +79,7 @@ import { LeaveEventCardComponent } from './components/dashboard/leave-events/lea
     }),
     [ModalModule.forRoot()],
     FormsModule,
-    
+    PaginationModule.forRoot(),
   ],
   providers: [
     provideAnimations(),

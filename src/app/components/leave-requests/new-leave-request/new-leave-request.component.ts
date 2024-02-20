@@ -71,17 +71,17 @@ export class NewLeaveRequestComponent implements OnInit, OnChanges {
     const endDate = new Date(activationEndDate.getFullYear(), activationEndDate.getMonth(), activationEndDate.getDate(), 0,  0, 0);
 
     let checkIfDateOverlaps = 0;
+    if (this.leaveRequests.length > 0) {
+      this.leaveRequests.forEach(val => {
+        this.unavailableDates.startDate = new Date(val.startDate);
+        this.unavailableDates.endDate = new Date(val.endDate);
 
-    this.leaveRequests.forEach(val => {
-
-      this.unavailableDates.startDate = new Date(val.startDate);
-      this.unavailableDates.endDate = new Date(val.endDate);
-
-      if (this.dateRangeOverlaps(startDate, endDate, this.unavailableDates.startDate, this.unavailableDates.endDate)) {
-        checkIfDateOverlaps++;
-        return;
-      }
-    })
+        if (this.dateRangeOverlaps(startDate, endDate, this.unavailableDates.startDate, this.unavailableDates.endDate)) {
+          checkIfDateOverlaps++;
+          return;
+        }
+      })
+    }
 
     if (checkIfDateOverlaps > 0) {
       this.toastr.warning('You already have leave in that period');
@@ -163,7 +163,7 @@ export class NewLeaveRequestComponent implements OnInit, OnChanges {
   }
 
   loadMyLeaveRequests() {
-    this.leaveService.getMyLeaveRequests().subscribe(res=>{
+    this.leaveService.getAllMyLeaveRequests().subscribe(res=>{
       this.leaveRequests = res;
 
     })

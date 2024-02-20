@@ -17,6 +17,7 @@ import { adminGuard } from './guards/admin.guard';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { leaveBalanceResolverResolver } from './resolvers/leave-balance-resolver.resolver';
 import { leaveRequestsResolverResolver } from './resolvers/leave-requests-resolver.resolver';
+// import { leaveRequestsResolverResolver } from './resolvers/leave-requests-resolver.resolver';
 
 const routes: Routes = [
   {
@@ -35,7 +36,7 @@ const routes: Routes = [
         children: [
           {
             path: 'apply',
-            resolve: {leaveBalance: leaveBalanceResolverResolver, myLeaveRequests: leaveRequestsResolverResolver},
+            resolve: { leaveBalance: leaveBalanceResolverResolver, myLeaveRequests: leaveRequestsResolverResolver},
             component: NewLeaveRequestComponent,
           },
           {
